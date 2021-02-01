@@ -1,6 +1,8 @@
 name: Build
 
 on:
+  repository_dispatch:
+    types: [ test_doc ]
   pull_request:
     branches:
       - develop
