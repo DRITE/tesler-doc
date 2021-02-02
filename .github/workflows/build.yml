@@ -26,7 +26,7 @@ jobs:
       - name: pack
         run: |
         yarn pack | cut -d'"' -f 2 | read front_tgz_path;
-        echo "front package path is $front_tgz_path";
+        echo 'front package path is $front_tgz_path';
 
 #  build:
 #    runs-on: ubuntu-latest
