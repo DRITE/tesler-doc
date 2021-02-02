@@ -25,8 +25,9 @@ jobs:
         run: yarn install
       - name: pack
         run: |
-          front_tgz_path=`yarn pack | cut -d'"' -f 2`;
-          echo "front package path is: $front_tgz_path";
+          yarn pack
+#          front_tgz_path=`yarn pack | cut -d'"' -f 2`;
+#          echo "front package path is: $front_tgz_path";
 
 #  build:
 #    runs-on: ubuntu-latest
