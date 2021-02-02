@@ -8,14 +8,28 @@ on:
       - develop
 
 jobs:
-  build:
+  build-front:
+    name: Build @tesler-ui/core
     runs-on: ubuntu-latest
-
+    if: github.event.client_payload.front.repository != ''
     steps:
-      - name: test
-        run: |
-          echo ${{ github.event.client_payload.front.repository }}
-          echo ${{ github.event.client_payload.front.branch }}
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ github.event.client_payload.front.repository }}
+          ref: ${{ github.event.client_payload.front.branch }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+          always-auth: true
+      - name: install
+        run: yarn install
+      - name: pack
+        run: yarn pack --filename tesler-ui-core.tgz
+
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
 #      - uses: actions/checkout@v2
 #
 #      - name: clean install
