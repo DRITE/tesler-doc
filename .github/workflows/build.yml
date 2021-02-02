@@ -12,7 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: clean install
-        run: mvn clean install -P Dev,UI
+      - name: test
+        run: |
+          echo ${{ github.event.client_payload.front.repository }}
+          echo ${{ github.event.client_payload.front.branch }}
+#      - uses: actions/checkout@v2
+#
+#      - name: clean install
+#        run: mvn clean install -P Dev,UI
