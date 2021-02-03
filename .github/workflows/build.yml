@@ -48,13 +48,7 @@ jobs:
         run: |
           pwd
           echo "###################################"
-          ls /home/runner/;
-          echo "###################################"
-          ls /home/runner/work/;
-          echo "###################################"
-          ls /home/runner/work/tesler-doc/;
-          echo "###################################"
-          ls -la
+          ls
       #          cd /home/runner/work/tesler-doc/tesler-doc/tesler-doc-ui/
       - name: Set front dependence
         run: |
