@@ -8,11 +8,6 @@ on:
       - develop
 
 jobs:
-  checkout:
-    name: Checkout tesler-doc
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
 
   build-front:
     name: Build @tesler-ui/core
@@ -39,20 +34,34 @@ jobs:
     outputs:
       front_package_path: ${{ steps.pack.outputs.front_package_path }}
 
-  set-front-local-dependence:
-    name: Set @tesler-ui/core from localc tgz
+  build:
+    name: Build tesler-doc
     runs-on: ubuntu-latest
-    needs: [checkout, build-front]
+    needs: [build-front]
     steps:
-      - name: Change dir
+      - uses: actions/checkout@v2
+      - name: Set front dependence
+        if: needs.build-front.outputs.front_package_path != ''
         run: |
           pwd
+          echo "-----------------------------------"
+          ls -la
           echo "###################################"
-          ls
-      #          cd /home/runner/work/tesler-doc/tesler-doc/tesler-doc-ui/
-      - name: Set front dependence
-        run: |
-          yarn add file:${{ needs.build-front.outputs.front_package_path }}
+
+#  set-front-local-dependence:
+#    name: Set @tesler-ui/core from localc tgz
+#    runs-on: ubuntu-latest
+#    needs: [checkout, build-front]
+#    steps:
+#      - name: Change dir
+#        run: |
+#          pwd
+#          echo "###################################"
+#          ls
+#      #          cd /home/runner/work/tesler-doc/tesler-doc/tesler-doc-ui/
+#      - name: Set front dependence
+#        run: |
+#          yarn add file:${{ needs.build-front.outputs.front_package_path }}
 
 #  build:
 #    runs-on: ubuntu-latest
