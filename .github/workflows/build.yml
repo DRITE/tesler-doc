@@ -46,6 +46,8 @@ jobs:
     steps:
       - name: Change dir
         run: |
+          pwd
+          echo "###################################"
           ls /home/runner/;
           echo "###################################"
           ls /home/runner/work/;
