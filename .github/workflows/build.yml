@@ -59,7 +59,7 @@ jobs:
         run: |
           cd tesler-doc-ui/
           yarn install
-          cat ../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
+          ls ../artifacts/front/
           cd ..
 
 #  set-front-local-dependence:
