@@ -29,6 +29,8 @@ jobs:
       - name: pack
         id: pack
         run: |
+          ls -la
+          echo "-%%%%%%%%%%%%%%%%%%%%%%%%%"
           front_tgz_name=`yarn pack | sed -n 2p | sed 's/.*tarball to \(.*\)\./\1/' | cut -d'"' -f 2 | sed 's/.*\///'`;
           echo "front package path is: $front_tgz_name";
           mv $front_tgz_name artifacts/front
