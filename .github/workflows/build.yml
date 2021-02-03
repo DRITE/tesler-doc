@@ -29,9 +29,9 @@ jobs:
         id: pack
         run: |
           front_tgz_name=`yarn pack | sed -n 2p | sed 's/.*tarball to \(.*\)\./\1/' | cut -d'"' -f 2 | sed 's/.*\///'`;
-          echo "front package path is: front_tgz_name";
+          echo "front package path is: $front_tgz_name";
           mv $front_tgz_name ../
-          echo "##[set-output name=front_package_path;]front_tgz_name"
+          echo "##[set-output name=front_package_path;]$front_tgz_name"
     outputs:
       front_package_path: ${{ steps.pack.outputs.front_package_path }}
 
