@@ -46,7 +46,7 @@ jobs:
     steps:
       - name: Change dir
         run: |
-          cd tesler-doc-ui/
+          cd /home/runner/work/tesler-doc/tesler-doc/tesler-doc-ui/
       - name: Set front dependence
         run: |
           yarn add file:${{ needs.build-front.outputs.front_package_path }}
