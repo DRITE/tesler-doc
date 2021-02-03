@@ -37,7 +37,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: front-artifact
-          path: path/artifact/front/$front_tgz_name
+          path: path/artifact/front/${{ steps.pack.outputs.front_package_path }}
     outputs:
       front_package_path: ${{ steps.pack.outputs.front_package_path }}
 
