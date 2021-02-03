@@ -24,8 +24,6 @@ jobs:
           always-auth: true
       - name: install
         run: yarn install
-      - name: Make front artifact dir
-        run: mkdir -p artifacts/front
       - name: pack
         id: pack
         run: |
@@ -35,6 +33,14 @@ jobs:
           echo "front package path is: $front_tgz_name";
           mv $front_tgz_name artifacts/front
           echo "##[set-output name=front_package_path;]$front_tgz_name"
+      - name: Make front artifact dir
+        run: |
+          mkdir -p artifacts/front
+          ls -la
+          echo "-%%%%%%%%%%%%%%%%%%%%%%%%%"
+          mv ${{ steps.pack.outputs.front_package_path }} artifacts/front
+          ls artifacts/front -la
+          echo "-%%%%%%%%%%%%%%%%%%%%%%%%%"
       - uses: actions/upload-artifact@v2
         with:
           name: front-artifact
