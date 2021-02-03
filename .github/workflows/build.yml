@@ -11,7 +11,6 @@ jobs:
 
   build-front:
     name: Build @tesler-ui/core
-#    needs: checkout
     runs-on: ubuntu-latest
     if: github.event.client_payload.front.repository != ''
     steps:
@@ -60,7 +59,7 @@ jobs:
         run: |
           cd tesler-doc-ui/
           yarn install
-          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
+          cat ../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
           cd ..
 
 #  set-front-local-dependence:
