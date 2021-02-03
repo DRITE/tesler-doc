@@ -58,14 +58,9 @@ jobs:
       - name: Set front dependence
         if: needs.build-front.outputs.front_package_path != ''
         run: |
-          ls -la ..
-          echo "-----------------------------------"
-          pwd
-          echo "-----------------------------------"
-          ls -la
-          echo "###################################"
           cd tesler-doc-ui/
-          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
+          yarn install --verbose
+          cd ..
 
 #  set-front-local-dependence:
 #    name: Set @tesler-ui/core from localc tgz
