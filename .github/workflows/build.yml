@@ -38,44 +38,32 @@ jobs:
         with:
           name: front-artifact
           path: artifacts/front/${{ steps.pack.outputs.front_package_path }}
+
+      - name: Test
+        run: tar zxvf artifacts/front/${{ steps.pack.outputs.front_package_path }}
     outputs:
       front_package_path: ${{ steps.pack.outputs.front_package_path }}
 
-  build:
-    name: Build tesler-doc
-    runs-on: ubuntu-latest
-    needs: [build-front]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
-          always-auth: true
-      - uses: actions/download-artifact@master
-        with:
-          name: front-artifact
-          path: artifacts/front/${{ needs.build-front.outputs.front_package_path }}
-      - name: Set front dependence
-        if: needs.build-front.outputs.front_package_path != ''
-        run: |
-          cd tesler-doc-ui/
-          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --verbose
-          cd ..
-
-#  set-front-local-dependence:
-#    name: Set @tesler-ui/core from localc tgz
+#  build:
+#    name: Build tesler-doc
 #    runs-on: ubuntu-latest
-#    needs: [checkout, build-front]
+#    needs: [build-front]
 #    steps:
-#      - name: Change dir
-#        run: |
-#          pwd
-#          echo "###################################"
-#          ls
-#      #          cd /home/runner/work/tesler-doc/tesler-doc/tesler-doc-ui/
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-node@v1
+#        with:
+#          node-version: '10.x'
+#          always-auth: true
+#      - uses: actions/download-artifact@master
+#        with:
+#          name: front-artifact
+#          path: artifacts/front/${{ needs.build-front.outputs.front_package_path }}
 #      - name: Set front dependence
+#        if: needs.build-front.outputs.front_package_path != ''
 #        run: |
-#          yarn add file:${{ needs.build-front.outputs.front_package_path }}
+#          cd tesler-doc-ui/
+#          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --verbose
+#          cd ..
 
 #  build:
 #    runs-on: ubuntu-latest
