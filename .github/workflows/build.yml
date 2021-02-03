@@ -27,19 +27,13 @@ jobs:
       - name: pack
         id: pack
         run: |
-          ls -la
-          echo "-%%%%%%%%%%%%%%%%%%%%%%%%%"
           front_tgz_name=`yarn pack | sed -n 2p | sed 's/.*tarball to \(.*\)\./\1/' | cut -d'"' -f 2 | sed 's/.*\///'`;
           echo "front package path is: $front_tgz_name";
           echo "##[set-output name=front_package_path;]$front_tgz_name"
       - name: Make front artifact dir
         run: |
           mkdir -p artifacts/front
-          ls -la
-          echo "-%%%%%%%%%%%%%%%%%%%%%%%%%"
           mv ${{ steps.pack.outputs.front_package_path }} artifacts/front
-          ls artifacts/front -la
-          echo "-%%%%%%%%%%%%%%%%%%%%%%%%%"
       - uses: actions/upload-artifact@v2
         with:
           name: front-artifact
@@ -65,8 +59,7 @@ jobs:
         if: needs.build-front.outputs.front_package_path != ''
         run: |
           cd tesler-doc-ui/
-          yarn install
-          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
+          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --verbose
           cd ..
 
 #  set-front-local-dependence:
