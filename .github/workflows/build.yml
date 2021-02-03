@@ -61,7 +61,7 @@ jobs:
           ls -la
           echo "###################################"
           cd tesler-doc-ui/
-          yarn add file:./artifacts/front/${{ needs.build-front.outputs.front_package_path }}
+          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
 
 #  set-front-local-dependence:
 #    name: Set @tesler-ui/core from localc tgz
