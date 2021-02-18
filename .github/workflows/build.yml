@@ -28,12 +28,9 @@ jobs:
         id: pack
         run: |
           ls -la
-          rm .gitignore
-          rm LICENSE
-          rm -r .github
-          rm -r .git
+          rm -r schemas
           echo "########################"
-          ls
+          ls -la
           echo "########################"
           front_tgz_name=`yarn pack | sed -n 2p | sed 's/.*tarball to \(.*\)\./\1/' | cut -d'"' -f 2 | sed 's/.*\///'`;
           echo "front package path is: $front_tgz_name";
