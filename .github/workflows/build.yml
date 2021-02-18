@@ -29,7 +29,7 @@ jobs:
         run: |
           ls -la
           rm .gitignore
-          rm LICENCE
+          rm LICENSE
           echo "########################"
           ls
           echo "########################"
