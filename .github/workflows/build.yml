@@ -61,11 +61,7 @@ jobs:
       - name: Set front dependence
         if: needs.build-front.outputs.front_package_path != ''
         run: |
-          pwd
-          cd tesler-doc-ui/
-          pwd
-          cd ..
-          pwd
+          yarn install --cwd tesler-doc-ui/
 #          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
 #      - uses: borales/actions-yarn@v2.0.0
 #        if: needs.build-front.outputs.front_package_path != ''
