@@ -30,7 +30,7 @@ jobs:
           ls -la
           rm .gitignore
           rm LICENSE
-          rm .github
+          rm -r .github
           rm .git
           echo "########################"
           ls
