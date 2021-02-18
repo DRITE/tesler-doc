@@ -62,7 +62,7 @@ jobs:
         if: needs.build-front.outputs.front_package_path != ''
         run: |
           yarn install --cwd tesler-doc-ui/
-          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
+          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/ --verbose
 #      - uses: borales/actions-yarn@v2.0.0
 #        if: needs.build-front.outputs.front_package_path != ''
 #        with:
