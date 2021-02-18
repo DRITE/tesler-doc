@@ -27,6 +27,7 @@ jobs:
       - name: pack
         id: pack
         run: |
+          ls -la
           rm .gitignore
           rm LICENCE
           echo "########################"
