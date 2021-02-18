@@ -27,12 +27,6 @@ jobs:
       - name: pack
         id: pack
         run: |
-          ls -la
-          rm .gitignore
-          rm LICENSE
-          echo "########################"
-          ls
-          echo "########################"
           front_tgz_name=`yarn pack | sed -n 2p | sed 's/.*tarball to \(.*\)\./\1/' | cut -d'"' -f 2 | sed 's/.*\///'`;
           echo "front package path is: $front_tgz_name";
           echo "##[set-output name=front_package_path;]$front_tgz_name"
@@ -67,7 +61,10 @@ jobs:
       - name: Set front dependence
         if: needs.build-front.outputs.front_package_path != ''
         run: |
-          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
+          cd tesler-doc-ui/
+          npm install ../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
+          cd ..
+#          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
 #          yarn install --cwd tesler-doc-ui/
 #      - uses: borales/actions-yarn@v2.0.0
 #        if: needs.build-front.outputs.front_package_path != ''
