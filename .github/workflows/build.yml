@@ -58,13 +58,18 @@ jobs:
         with:
           name: front-artifact
           path: artifacts/front/${{ needs.build-front.outputs.front_package_path }}
-      - name: Set front dependence
+#      - name: Set front dependence
+#        if: needs.build-front.outputs.front_package_path != ''
+#        run: |
+#          cd tesler-doc-ui/
+#          yarn -v
+#          cd ..
+      - uses: borales/actions-yarn@v2.0.0
         if: needs.build-front.outputs.front_package_path != ''
-        run: |
-          cd tesler-doc-ui/
-          yarn -v
-          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
-          cd ..
+        with:
+          cmd: add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
+
+#          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
 
 #  build:
 #    runs-on: ubuntu-latest
