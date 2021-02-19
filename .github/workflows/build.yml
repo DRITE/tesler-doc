@@ -57,7 +57,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: front-artifact
-          path: artifacts/front/${{ needs.build-front.outputs.front_package_path }}
+          path: artifacts/front/ #${{ needs.build-front.outputs.front_package_path }}
       - name: Set front dependence
         if: needs.build-front.outputs.front_package_path != ''
         run: |
