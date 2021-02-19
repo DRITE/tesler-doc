@@ -27,14 +27,6 @@ jobs:
       - name: pack
         id: pack
         run: |
-          ls -la
-          echo "#############"
-          rm yarn.lock
-          rm webpack.config.js
-          rm tsconfig.json
-          rm .prettierrc.js
-          rm jest.config.js
-          ls -la
           front_tgz_name=`yarn pack | sed -n 2p | sed 's/.*tarball to \(.*\)\./\1/' | cut -d'"' -f 2 | sed 's/.*\///'`;
           echo "front package path is: $front_tgz_name";
           echo "##[set-output name=front_package_path;]$front_tgz_name"
