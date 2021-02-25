@@ -63,6 +63,8 @@ jobs:
         run: |
           ls -la ./artifacts/front/
           yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
+      - name: clean install
+        run: mvn clean install -P Dev,UI
 #          cd tesler-doc-ui/
 #          npm install ../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
 #          cd ..
