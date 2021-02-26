@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Back triggered
         run: |
-          echo "${{ toJSON(github.event.client_payload.front) }}"
+          echo "${{ toJSON(github.event.client_payload.back) }}"
 
   build-front:
     name: Build @tesler-ui/core
