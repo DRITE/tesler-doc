@@ -9,6 +9,15 @@ on:
 
 jobs:
 
+  build-back:
+    name: Build tesler
+    runs-on: ubuntu-latest
+    if: github.event.client_payload.back.repository != ''
+    steps:
+      - name: Back triggered
+        run: |
+          echo "${{ toJSON(github.event.client_payload.front) }}"
+
   build-front:
     name: Build @tesler-ui/core
     runs-on: ubuntu-latest
