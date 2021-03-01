@@ -9,14 +9,14 @@ on:
 
 jobs:
 
-  build-back:
-    name: Build tesler
-    runs-on: ubuntu-latest
-    if: github.event.client_payload.back.repository != ''
-    steps:
-      - name: Back triggered
-        run: |
-          echo "${{ toJSON(github.event.client_payload.back) }}"
+#  build-back:
+#    name: Build tesler
+#    runs-on: ubuntu-latest
+#    if: github.event.client_payload.back.repository != ''
+#    steps:
+#      - name: Back triggered
+#        run: |
+#          echo "${{ toJSON(github.event.client_payload.back) }}"
 
   build-front:
     name: Build @tesler-ui/core
@@ -58,6 +58,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-front]
     steps:
+      - uses: actions/checkout@v2
+        if: github.event.client_payload.back.repository != ''
+        with:
+          repository: ${{ github.event.client_payload.back.repository }}
+          ref: ${{ github.event.client_payload.back.branch }}
+      - name: Build tesler
+        if: github.event.client_payload.back.repository != ''
+        run: |
+          echo "Build tesler triggered"
+          mvn versions:set -DnewVersion=test-test
+          mvn --batch-mode clean install
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
