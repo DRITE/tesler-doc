@@ -76,10 +76,11 @@ jobs:
           node-version: '10.x'
           always-auth: true
       - uses: actions/download-artifact@master
+        if: needs.build-front.outputs.front_package_path != ''
         with:
           name: front-artifact
           path: artifacts/front/ #${{ needs.build-front.outputs.front_package_path }}
-      - name: Set front dependence
+      - name: Set front dependency
         if: needs.build-front.outputs.front_package_path != ''
         run: |
           ls -la ./artifacts/front/
