@@ -71,6 +71,8 @@ jobs:
           mvn versions:set -DnewVersion=test-test
           mvn --batch-mode clean install
       - uses: actions/checkout@v2
+        with:
+          ref: develop
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
