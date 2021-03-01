@@ -56,6 +56,7 @@ jobs:
   build:
     name: Build tesler-doc
     runs-on: ubuntu-latest
+    if: always()
     needs: [build-front]
     steps:
       - uses: actions/checkout@v2
