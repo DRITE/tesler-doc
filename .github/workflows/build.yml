@@ -121,8 +121,6 @@ jobs:
         id: container
         run: |
           rep=`echo "${{ github.repository }}" | awk '{print tolower($0)}'`
-#          echo "##[set-output name=container_name;]$rep"
-#          echo "##[set-output name=container_tag;]${{ github.run_id }}"
           docker login -u $USERNAME -p $TOKEN
           docker build -t $rep:latest -t $rep:${{ github.run_id }} ./tesler-doc-app/
           docker push $rep
