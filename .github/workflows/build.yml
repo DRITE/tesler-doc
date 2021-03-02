@@ -59,7 +59,7 @@ jobs:
     if: always()
     needs: [build-front]
     # Docker Hub image that `container-job` executes in
-    container: node:10.18-jessie
+#    container: node:10.18-jessie
 
     # Service containers to run with `container-job`
     services:
@@ -76,16 +76,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
     steps:
-      - name: Download Maven
-        run: |
-          curl -sL https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip -o maven.zip
-          apt-get update
-          apt-get -y install unzip
-          unzip -d /usr/share maven.zip
-          rm maven.zip
-          ln -s /usr/share/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
-          echo "M2_HOME=/usr/share/apache-maven-3.6.3" | tee -a /etc/environment
+#      - name: Download Maven
+#        run: |
+#          curl -sL https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip -o maven.zip
+#          apt-get update
+#          apt-get -y install unzip
+#          unzip -d /usr/share maven.zip
+#          rm maven.zip
+#          ln -s /usr/share/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
+#          echo "M2_HOME=/usr/share/apache-maven-3.6.3" | tee -a /etc/environment
       - uses: actions/checkout@v2
         if: github.event.client_payload.back.repository != ''
         with:
@@ -120,22 +123,3 @@ jobs:
       - name: clean install
         if: github.event.client_payload.back.repository == ''
         run: mvn clean install -P Dev,UI
-#          cd tesler-doc-ui/
-#          npm install ../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
-#          cd ..
-#          yarn install --cwd tesler-doc-ui/
-#      - uses: borales/actions-yarn@v2.0.0
-#        if: needs.build-front.outputs.front_package_path != ''
-#        with:
-#          cmd: add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
-
-#          yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }}
-
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#
-#      - name: clean install
-#        run: mvn clean install -P Dev,UI
