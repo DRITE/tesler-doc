@@ -80,7 +80,7 @@ jobs:
 #          # Maps tcp port 5432 on service container to the host
 #          - 5432:5432
     steps:
-      - run: echo "repo=$REPO,GITHUB_RUN_ID= ${{GITHUB_RUN_ID}}"
+      - run: echo "repo=${{ github.repository }},github.run_id=${{ github.run_id }}"
       #      - name: Download Maven
 #        run: |
 #          curl -sL https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip -o maven.zip
