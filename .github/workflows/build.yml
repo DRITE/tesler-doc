@@ -84,15 +84,6 @@ jobs:
 #          # Maps tcp port 5432 on service container to the host
 #          - 5432:5432
     steps:
-      #      - name: Download Maven
-#        run: |
-#          curl -sL https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip -o maven.zip
-#          apt-get update
-#          apt-get -y install unzip
-#          unzip -d /usr/share maven.zip
-#          rm maven.zip
-#          ln -s /usr/share/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
-#          echo "M2_HOME=/usr/share/apache-maven-3.6.3" | tee -a /etc/environment
       - uses: actions/checkout@v2
         if: github.event.client_payload.back.repository != ''
         with:
@@ -127,8 +118,42 @@ jobs:
         if: github.event.client_payload.back.repository == ''
         run: mvn clean verify -P Dev,UI
       - name: Create and publish Docker container
+        id: container
         run: |
           rep=`echo "${{ github.repository }}" | awk '{print tolower($0)}'`
+          echo "##[set-output name=container_name;]$rep"
+          echo "##[set-output name=container_tag;]${{ github.run_id }}"
           docker login -u $USERNAME -p $TOKEN
           docker build -t $rep:latest -t $rep:${{ github.run_id }} ./tesler-doc-app/
           docker push $rep
+    outputs:
+      container_name: ${{ steps.container.outputs.container_name }}
+      container_tag: ${{ steps.container.outputs.container_tag }}
+
+  run-tests:
+    name: Run autotests
+    runs-on: ubuntu-latest
+    environment: build
+    needs: [build]
+    # Service containers to run with `container-job`
+#    services:
+#      tesler-doc:
+#        image: ${{ needs.build.outputs.container_name }}
+#      # Label used to access the service container
+#      postgres:
+#        # Docker Hub image
+#        image: postgres
+#        # Provide the password for postgres
+#        env:
+#          POSTGRES_PASSWORD: postgres
+#        # Set health checks to wait until postgres has started
+#        options: >-
+#          --health-cmd pg_isready
+#          --health-interval 10s
+#          --health-timeout 5s
+#          --health-retries 5
+    steps:
+      - name: display some info
+        run: |
+          echo "${{ needs.build.outputs.container_name }}"
+          echo "${{ needs.build.outputs.container_tag }}"
