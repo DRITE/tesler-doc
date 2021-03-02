@@ -61,26 +61,27 @@ jobs:
     # Docker Hub image that `container-job` executes in
 #    container: node:10.18-jessie
 
-    # Service containers to run with `container-job`
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          # Maps tcp port 5432 on service container to the host
-          - 5432:5432
+#    # Service containers to run with `container-job`
+#    services:
+#      # Label used to access the service container
+#      postgres:
+#        # Docker Hub image
+#        image: postgres
+#        # Provide the password for postgres
+#        env:
+#          POSTGRES_PASSWORD: postgres
+#        # Set health checks to wait until postgres has started
+#        options: >-
+#          --health-cmd pg_isready
+#          --health-interval 10s
+#          --health-timeout 5s
+#          --health-retries 5
+#        ports:
+#          # Maps tcp port 5432 on service container to the host
+#          - 5432:5432
     steps:
-#      - name: Download Maven
+      - run: echo "repo=$REPO,GITHUB_RUN_ID= ${{GITHUB_RUN_ID}}"
+      #      - name: Download Maven
 #        run: |
 #          curl -sL https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip -o maven.zip
 #          apt-get update
@@ -123,5 +124,7 @@ jobs:
       - name: clean install
         if: github.event.client_payload.back.repository == ''
         run: mvn clean install -P Dev,UI
-      - name: spring-boot:run
-        run: spring-boot:run -X -f tesler-doc-app -P Dev
+#      - name: Create and publish Docker container
+#        run: |
+#          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+#          docker build -t $REPO:latest -t $REPO:${{GITHUB_RUN_ID}}
