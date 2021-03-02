@@ -134,7 +134,7 @@ jobs:
     environment: build
     env:
       CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-    needs: [build-doc]
+#    needs: [build-doc]
     # Service containers to run with `container-job`
 #    services:
 ##      tesler-doc:
