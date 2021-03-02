@@ -132,14 +132,14 @@ jobs:
     name: Run autotests
     runs-on: ubuntu-latest
     environment: build
-    env:
-      CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+#    env:
+#      CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
     if: always()
     needs: [build-doc]
     # Service containers to run with `container-job`
     services:
       tesler-doc:
-        image: ${{ secrets.CONTAINER_NAME }}
+        image: drite/tesler-doc
       # Label used to access the service container
       postgres:
         # Docker Hub image
