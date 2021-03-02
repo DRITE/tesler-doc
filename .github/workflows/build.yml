@@ -121,14 +121,14 @@ jobs:
         id: container
         run: |
           rep=`echo "${{ github.repository }}" | awk '{print tolower($0)}'`
-          echo "##[set-output name=container_name;]$rep"
-          echo "##[set-output name=container_tag;]${{ github.run_id }}"
+#          echo "##[set-output name=container_name;]$rep"
+#          echo "##[set-output name=container_tag;]${{ github.run_id }}"
           docker login -u $USERNAME -p $TOKEN
           docker build -t $rep:latest -t $rep:${{ github.run_id }} ./tesler-doc-app/
           docker push $rep
-    outputs:
-      container_name: ${{ steps.container.outputs.container_name }}
-      container_tag: ${{ steps.container.outputs.container_tag }}
+#    outputs:
+#      container_name: ${{ steps.container.outputs.container_name }}
+#      container_tag: ${{ steps.container.outputs.container_tag }}
 
   run-tests:
     name: Run autotests
@@ -138,7 +138,7 @@ jobs:
     # Service containers to run with `container-job`
     services:
       tesler-doc:
-        image: ${{ needs.build.outputs.container_name }}
+        image: ${{ echo "${{ github.repository }}" | awk '{print tolower($0)} }}
       # Label used to access the service container
       postgres:
         # Docker Hub image
