@@ -60,6 +60,7 @@ jobs:
     env:
       TOKEN: ${{ secrets.DOCKER_TOKEN }}
       USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
     if: always()
     needs: [build-front]
     # Docker Hub image that `container-job` executes in
@@ -120,10 +121,9 @@ jobs:
       - name: Create and publish Docker container
         id: container
         run: |
-          rep=`echo "${{ github.repository }}" | awk '{print tolower($0)}'`
           docker login -u $USERNAME -p $TOKEN
-          docker build -t $rep:latest -t $rep:${{ github.run_id }} ./tesler-doc-app/
-          docker push $rep
+          docker build -t $CONTAINER_NAME:latest -t $CONTAINER_NAME:${{ github.run_id }} ./tesler-doc-app/
+          docker push $CONTAINER_NAME
 #    outputs:
 #      container_name: ${{ steps.container.outputs.container_name }}
 #      container_tag: ${{ steps.container.outputs.container_tag }}
@@ -132,11 +132,13 @@ jobs:
     name: Run autotests
     runs-on: ubuntu-latest
     environment: build
+    env:
+      CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
     needs: [build]
     # Service containers to run with `container-job`
     services:
       tesler-doc:
-        image: ${{ echo "${{ github.repository }}" | awk '{print tolower($0)} }}
+        image: $CONTAINER_NAME
       # Label used to access the service container
       postgres:
         # Docker Hub image
