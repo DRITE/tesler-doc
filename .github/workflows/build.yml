@@ -123,3 +123,5 @@ jobs:
       - name: clean install
         if: github.event.client_payload.back.repository == ''
         run: mvn clean install -P Dev,UI
+      - name: spring-boot:run
+        run: spring-boot:run -X -f tesler-doc-app -P Dev
