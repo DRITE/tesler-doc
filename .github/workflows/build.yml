@@ -139,7 +139,7 @@ jobs:
     # Service containers to run with `container-job`
     services:
       tesler-doc:
-        image: $CONTAINER_NAME
+        image: ${{ secrets.CONTAINER_NAME }}
       # Label used to access the service container
       postgres:
         # Docker Hub image
