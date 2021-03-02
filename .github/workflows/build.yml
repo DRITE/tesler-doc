@@ -53,7 +53,7 @@ jobs:
     outputs:
       front_package_path: ${{ steps.pack.outputs.front_package_path }}
 
-  build:
+  build-doc:
     name: Build tesler-doc
     runs-on: ubuntu-latest
     environment: build
@@ -134,24 +134,24 @@ jobs:
     environment: build
     env:
       CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-    needs: [build]
+    needs: [build-doc]
     # Service containers to run with `container-job`
-    services:
-#      tesler-doc:
-#        image: $CONTAINER_NAME
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+#    services:
+##      tesler-doc:
+##        image: $CONTAINER_NAME
+#      # Label used to access the service container
+#      postgres:
+#        # Docker Hub image
+#        image: postgres
+#        # Provide the password for postgres
+#        env:
+#          POSTGRES_PASSWORD: postgres
+#        # Set health checks to wait until postgres has started
+#        options: >-
+#          --health-cmd pg_isready
+#          --health-interval 10s
+#          --health-timeout 5s
+#          --health-retries 5
     steps:
       - uses: actions/checkout@v2
         with:
