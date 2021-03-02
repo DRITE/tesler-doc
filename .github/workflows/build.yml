@@ -120,15 +120,15 @@ jobs:
         run: |
           ls -la ./artifacts/front/
           yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
-      - name: clean install with local tesler
+      - name: Maven Verify with local tesler
         if: github.event.client_payload.back.repository != ''
         run: mvn clean verify -P Dev,UI -D tesler.version=test-test
-      - name: clean install
+      - name: Maven Verify
         if: github.event.client_payload.back.repository == ''
         run: mvn clean verify -P Dev,UI
       - name: Create and publish Docker container
         run: |
           rep=`echo "${{ github.repository }}" | awk '{print tolower($0)}'`
           docker login -u $USERNAME -p $TOKEN
-          docker build -t $rep:latest -t ${{ github.repository }}:${{ github.run_id }} ./tesler-doc-app/
+          docker build -t $rep:latest -t $rep:${{ github.run_id }} ./tesler-doc-app/
           docker push $rep
