@@ -56,6 +56,7 @@ jobs:
   build:
     name: Build tesler-doc
     runs-on: ubuntu-latest
+    environment: doc
     if: always()
     needs: [build-front]
     # Docker Hub image that `container-job` executes in
@@ -119,12 +120,12 @@ jobs:
           yarn add file:../artifacts/front/${{ needs.build-front.outputs.front_package_path }} --cwd tesler-doc-ui/
       - name: clean install with local tesler
         if: github.event.client_payload.back.repository != ''
-        run: mvn clean install -P Dev,UI -D tesler.version=test-test
+        run: mvn clean verify -P Dev,UI -D tesler.version=test-test
       - name: clean install
         if: github.event.client_payload.back.repository == ''
-        run: mvn clean install -P Dev,UI
+        run: mvn clean verify -P Dev,UI
       - name: Create and publish Docker container
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
-          docker build -t ${{ github.repository }}:latest -t ${{ github.repository }}:${{ github.run_id }}
+          docker build -t ${{ github.repository }}:latest -t ${{ github.repository }}:${{ github.run_id }} ./tesler-doc-app/
           docker push ${{ github.repository }}
