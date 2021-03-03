@@ -9,15 +9,6 @@ on:
 
 jobs:
 
-#  build-back:
-#    name: Build tesler
-#    runs-on: ubuntu-latest
-#    if: github.event.client_payload.back.repository != ''
-#    steps:
-#      - name: Back triggered
-#        run: |
-#          echo "${{ toJSON(github.event.client_payload.back) }}"
-
   build-front:
     name: Build @tesler-ui/core
     runs-on: ubuntu-latest
@@ -47,9 +38,6 @@ jobs:
         with:
           name: front-artifact
           path: artifacts/front/${{ steps.pack.outputs.front_package_path }}
-
-#      - name: Test
-#        run: tar zxvf artifacts/front/${{ steps.pack.outputs.front_package_path }}
     outputs:
       front_package_path: ${{ steps.pack.outputs.front_package_path }}
 
@@ -63,27 +51,6 @@ jobs:
       CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
     if: always()
     needs: [build-front]
-    # Docker Hub image that `container-job` executes in
-#    container: node:10.18-jessie
-
-#    # Service containers to run with `container-job`
-#    services:
-#      # Label used to access the service container
-#      postgres:
-#        # Docker Hub image
-#        image: postgres
-#        # Provide the password for postgres
-#        env:
-#          POSTGRES_PASSWORD: postgres
-#        # Set health checks to wait until postgres has started
-#        options: >-
-#          --health-cmd pg_isready
-#          --health-interval 10s
-#          --health-timeout 5s
-#          --health-retries 5
-#        ports:
-#          # Maps tcp port 5432 on service container to the host
-#          - 5432:5432
     steps:
       - uses: actions/checkout@v2
         if: github.event.client_payload.back.repository != ''
@@ -106,7 +73,7 @@ jobs:
         if: needs.build-front.outputs.front_package_path != ''
         with:
           name: front-artifact
-          path: artifacts/front/ #${{ needs.build-front.outputs.front_package_path }}
+          path: artifacts/front/
       - name: Set front dependency
         if: needs.build-front.outputs.front_package_path != ''
         run: |
@@ -127,9 +94,6 @@ jobs:
         run: docker login -u $USERNAME -p $TOKEN
       - run: docker build -t $CONTAINER_NAME:latest -t $CONTAINER_NAME:${{ github.run_id }} ./tesler-doc-app/
       - run: docker push $CONTAINER_NAME
-#    outputs:
-#      container_name: ${{ steps.container.outputs.container_name }}
-#      container_tag: ${{ steps.container.outputs.container_tag }}
 
   run-tests:
     name: Run autotests
@@ -140,18 +104,13 @@ jobs:
     if: always()
     needs: [build-doc]
     container: maven:3.6-jdk-11
-    # Service containers to run with `container-job`
     services:
       tesler-doc:
         image: drite/tesler-doc
-      # Label used to access the service container
       postgres:
-        # Docker Hub image
         image: postgres
-        # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
