@@ -124,6 +124,7 @@ jobs:
         with:
           node-version: '10.x'
           always-auth: true
+      - uses: nanasess/setup-chromedriver@master
       - run: mvn -X clean install -P UI,Dev -DskipTests=true
       - run: mvn test -Dtest=io.tesler.test.TestUI -X -f tesler-doc-tests
 #      - name: display some info
