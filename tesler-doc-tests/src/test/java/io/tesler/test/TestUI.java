@@ -135,7 +135,8 @@ public class TestUI {
 	}
 
 	private void Login() {
-		open("http://localhost:8080");
+		open("http://tesler-doc");
+//		open("http://localhost:8080");
 
 		LoginInput(0).setValue("Test");
 		LoginButton.click();
