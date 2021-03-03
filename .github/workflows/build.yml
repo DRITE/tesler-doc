@@ -136,6 +136,7 @@ jobs:
 #      CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
     if: always()
     needs: [build-doc]
+    container: maven:3.6-jdk-11
     # Service containers to run with `container-job`
     services:
       tesler-doc:
@@ -156,7 +157,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: develop
+          ref: upstream/TestUI
+      - name: Run autotests
+        run: |
+          mvn test -Dtest=io.tesler.test.TestUI -X -f tesler-doc-tests
 #      - name: display some info
 #        run: |
 #          echo "${{ needs.build.outputs.container_name }}"
