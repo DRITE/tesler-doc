@@ -61,7 +61,7 @@ jobs:
         if: github.event.client_payload.back.repository != ''
         run: |
           mvn versions:set -DnewVersion=test-test
-          mvn --batch-mode clean install
+          mvn --batch-mode clean install -DskipTests=true
       - uses: actions/checkout@v2
         with:
           ref: develop
