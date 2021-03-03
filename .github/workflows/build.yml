@@ -157,7 +157,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: upstream/TestUI
+          ref: TestUI
       - name: Run autotests
         run: |
           mvn test -Dtest=io.tesler.test.TestUI -X -f tesler-doc-tests
