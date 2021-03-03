@@ -124,7 +124,7 @@ jobs:
         with:
           node-version: '10.x'
           always-auth: true
-      - run: mvn -X clean install -P UI,Dev
+      - run: mvn -X clean install -P UI,Dev -DskipTests=true
       - run: mvn test -Dtest=io.tesler.test.TestUI -X -f tesler-doc-tests
 #      - name: display some info
 #        run: |
