@@ -158,10 +158,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: TestUI
-      - name: Run autotests
-        run: |
-          mvn clean install
-          mvn test -Dtest=io.tesler.test.TestUI -X -f tesler-doc-tests
+      - run: mvn clean install
+      - run: mvn test -Dtest=io.tesler.test.TestUI -X -f tesler-doc-tests
 #      - name: display some info
 #        run: |
 #          echo "${{ needs.build.outputs.container_name }}"
