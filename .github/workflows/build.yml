@@ -125,8 +125,8 @@ jobs:
           - 4444:4444
       chrome:
         image: selenium/node-chrome:4.0.0-beta-1-20210215
-        volumes:
-          - ./tesler-doc-tests/build/shm:/dev/shm
+#        volumes:
+#          - ./tesler-doc-tests/build/shm:/dev/shm
         env:
           SE_EVENT_BUS_HOST: selenium-hub
           SE_EVENT_BUS_PUBLISH_PORT: 4442
