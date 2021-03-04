@@ -147,3 +147,9 @@ jobs:
           always-auth: true
       - run: mvn -X clean install -P UI,Dev -DskipTests=true
       - run: mvn -X clean verify -P Tests -f tesler-doc-tests
+      - name: Upload test reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
+          path: tesler-doc-tests/build/reports/
+
