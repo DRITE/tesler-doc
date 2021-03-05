@@ -50,7 +50,7 @@ jobs:
       USERNAME: ${{ secrets.DOCKER_USERNAME }}
       CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
     if: always()
-    needs: [build-front]
+    needs: build-front
     steps:
       - uses: actions/checkout@v2
         if: github.event.client_payload.back.repository != ''
@@ -95,7 +95,7 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     environment: build
-    needs: [build-doc]
+    needs: build-doc
     services:
       postgres:
         image: postgres:alpine
