@@ -95,8 +95,7 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     environment: build
-    if: ${{ success() }}
-    needs: build-doc
+    needs: [build-front, build-doc]
     services:
       postgres:
         image: postgres:alpine
