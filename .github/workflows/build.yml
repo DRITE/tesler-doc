@@ -61,8 +61,8 @@ jobs:
         if: github.event.client_payload.back.repository != ''
         run: |
           mvn versions:set -DnewVersion=test-test
-          mvn --batch-mode clean install
-#          mvn --batch-mode clean install -DskipTests=true
+          mvn --batch-mode clean install -DskipTests=true
+#          mvn --batch-mode clean install
       - uses: actions/checkout@v2
         with:
           ref: develop
@@ -95,7 +95,6 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     environment: build
-#    if: always()
     needs: [build-doc]
     services:
       postgres:
@@ -118,8 +117,6 @@ jobs:
           - 4444:4444
       chrome:
         image: selenium/node-chrome:4.0.0-beta-1-20210215
-#        volumes:
-#          - ./tesler-doc-tests/build/shm:/dev/shm
         env:
           SE_EVENT_BUS_HOST: selenium-hub
           SE_EVENT_BUS_PUBLISH_PORT: 4442
@@ -140,7 +137,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: experiment/compose
+          ref: ${{ secrets.TEST_BRANCH }}
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
