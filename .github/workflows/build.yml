@@ -97,8 +97,6 @@ jobs:
     environment: build
     if: always()
     needs: build-doc
-    env:
-      CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
     services:
       postgres:
         image: postgres:alpine
@@ -127,7 +125,7 @@ jobs:
         ports:
           - 6900:5900
       tesler-doc-node-qa:
-        image: $CONTAINER_NAME
+        image: drite/tesler-doc
         env:
           DATABASE_DRIVER: org.postgresql.Driver
           DATABASE_URL: jdbc:postgresql://postgres:5432/postgres
