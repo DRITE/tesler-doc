@@ -90,6 +90,7 @@ jobs:
         run: docker login -u $USERNAME -p $TOKEN
       - run: docker build -t $CONTAINER_NAME:latest -t $CONTAINER_NAME:${{ github.run_id }} ./tesler-doc-app/
       - run: docker push $CONTAINER_NAME
+      - run: echo "run id ${{ github.run_id }}"
 
   run-tests:
     name: Run tests
@@ -125,7 +126,7 @@ jobs:
         ports:
           - 6900:5900
       tesler-doc-node-qa:
-        image: drite/tesler-doc
+        image: drite/tesler-doc:${{ github.run_id }}
         env:
           DATABASE_DRIVER: org.postgresql.Driver
           DATABASE_URL: jdbc:postgresql://postgres:5432/postgres
@@ -136,6 +137,7 @@ jobs:
           - 0.0.0.0:8080:8080
           - 127.0.0.1:8981:8989
     steps:
+      - run: echo "run id ${{ github.run_id }}"
       - uses: actions/checkout@v2
         with:
           ref: ${{ secrets.TEST_BRANCH }}
