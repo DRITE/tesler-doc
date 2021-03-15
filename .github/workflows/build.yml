@@ -88,9 +88,8 @@ jobs:
         run: mvn clean verify -P Dev,UI
       - name: Login to docker
         run: docker login -u $USERNAME -p $TOKEN
-      - run: docker build -t $CONTAINER_NAME:latest -t $CONTAINER_NAME:${{ github.run_id }} ./tesler-doc-app/
+      - run: docker build -t $CONTAINER_NAME:${{ github.run_id }} -t $CONTAINER_NAME:latest ./tesler-doc-app/
       - run: docker push $CONTAINER_NAME
-      - run: echo "run id ${{ github.run_id }}"
 
   run-tests:
     name: Run tests
@@ -137,7 +136,6 @@ jobs:
           - 0.0.0.0:8080:8080
           - 127.0.0.1:8981:8989
     steps:
-      - run: echo "run id ${{ github.run_id }}"
       - uses: actions/checkout@v2
         with:
           ref: ${{ secrets.TEST_BRANCH }}
