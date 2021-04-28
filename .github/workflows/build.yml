@@ -124,6 +124,10 @@ jobs:
           SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
         ports:
           - 6900:5900
+      jacoco:
+        image: ictu/jacoco-agent-docker:0.8.6
+        volumes:
+          - jacoco:/jacoco:ro
       tesler-doc-node-qa:
         image: drite/tesler-doc:${{ github.run_id }}
         env:
@@ -131,7 +135,9 @@ jobs:
           DATABASE_URL: jdbc:postgresql://postgres:5432/postgres
           DATABASE_USER: postgres
           DATABASE_PASSWORD: khKJPOsfiwae
-          JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,address=8989,suspend=n
+          JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,address=8989,suspend=n  -javaagent:/jacoco/lib/jacocoagent.jar=address=*,port=36320,destfile=/tmp/jacoco-it.exec,output=tcpserver
+        volumes:
+          - jacoco:/jacoco:ro
         ports:
           - 0.0.0.0:8080:8080
           - 127.0.0.1:8981:8989
@@ -139,12 +145,28 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ secrets.TEST_BRANCH }}
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
           always-auth: true
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - run: mvn -X clean install -P UI,Dev -DskipTests=true
-      - run: mvn -X clean verify -P Tests -f tesler-doc-tests
+      - run: mvn -B -X verify -P Tests -f tesler-doc-tests org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v2
