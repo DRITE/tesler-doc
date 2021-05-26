@@ -141,6 +141,7 @@ jobs:
         ports:
           - 0.0.0.0:8080:8080
           - 127.0.0.1:8981:8989
+          - 36320:36320
     steps:
       - uses: actions/checkout@v2
         with:
