@@ -97,6 +97,7 @@
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/jacoco-integration-test-coverage-report/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.verbose>true</sonar.verbose>
         <sonar.projectVersion>1.0-SNAPSHOT</sonar.projectVersion>
+        <sonar.projectBaseDir>${project.basedir}/../tesler-doc-source/src/main/java</sonar.projectBaseDir>
       </properties>
       <build>
         <plugins>
