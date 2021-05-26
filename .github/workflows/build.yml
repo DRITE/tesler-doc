@@ -141,7 +141,7 @@ jobs:
         ports:
           - 0.0.0.0:8080:8080
           - 127.0.0.1:8981:8989
-          - 36320:36320
+          - 0.0.0.0:36320:36320
     steps:
       - uses: actions/checkout@v2
         with:
@@ -166,7 +166,6 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - run: mvn -X clean install -P UI,Dev -DskipTests=true
       - run: mvn -B -X verify -P Tests -f tesler-doc-tests org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Upload test reports
         if: always()
@@ -174,4 +173,5 @@ jobs:
         with:
           name: reports
           path: tesler-doc-tests/build/reports/
+#      - run: mvn -X clean install -P UI,Dev -DskipTests=true
 
