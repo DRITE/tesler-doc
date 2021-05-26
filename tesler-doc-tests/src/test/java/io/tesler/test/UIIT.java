@@ -84,12 +84,12 @@ public class UIIT {
 		Configuration.browserSize = "1440x768";
 
 		Login();
-//		TestInput();
-//		TestDictionary();
-//		TestNumber();
-//		TestDate();
-//		TestPickList();
-//		TestFilter();
+		TestInput();
+		TestDictionary();
+		TestNumber();
+		TestDate();
+		TestPickList();
+		TestFilter();
 	}
 
 	private void Login() {
