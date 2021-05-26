@@ -71,6 +71,12 @@ public class UIIT {
 
 	private DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
+	public static final boolean IS_REMOTE_SELENIUM = true; //set false to open browser not in container (locally)
+
+	public static final String UI_URL_FROM_HOST = "http://localhost:8080";
+
+	public static final String UI_URL_FROM_BROWSER = IS_REMOTE_SELENIUM ? "http://tesler-doc-node-qa:8080" : UI_URL_FROM_HOST;
+
 	@Test
 	public void TestUI() {
 
@@ -87,7 +93,7 @@ public class UIIT {
 	}
 
 	private void Login() {
-		open("http://localhost:8080");
+		open(UI_URL_FROM_BROWSER);
 
 		LoginInput(0).setValue("Test");
 		LoginButton.click();
