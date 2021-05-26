@@ -16,7 +16,9 @@
   <properties>
     <checktyle.config>/tesler-doc-base/src/main/resources/checkstyle-checker.xml</checktyle.config>
     <skip.license>false</skip.license>
-    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <sonar.projectKey>DRITE_tesler-doc</sonar.projectKey>
+    <sonar.organization>drite</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.coverage.jacoco.xmlReportPaths>
       ${user.dir}\tesler-doc-tests\target\jacoco-integration-test-coverage-report\jacoco.xml
     </sonar.coverage.jacoco.xmlReportPaths>
