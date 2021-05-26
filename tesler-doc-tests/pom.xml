@@ -87,14 +87,14 @@
 
         <!--below props should be in sync with sonar-project.properties -->
 <!--        <sonar.projectKey>com.daimler.gnsa</sonar.projectKey>-->
-        <sonar.sources>${project.basedir}/tesler-doc-source/src/main/java</sonar.sources>
-        <sonar.java.binaries>${project.basedir}/tesler-doc-source/target</sonar.java.binaries>
+        <sonar.sources>${project.basedir}/../tesler-doc-source/src/main/java</sonar.sources>
+        <sonar.java.binaries>${project.basedir}/../tesler-doc-source/target</sonar.java.binaries>
         <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
-        <sonar.java.libraries>${project.basedir}/tesler-doc-source/target/tesler-doc-source-1.0-SNAPSHOT.jar</sonar.java.libraries>
-        <sonar.tests>${project.basedir}/tesler-doc-tests/src/test/java</sonar.tests>
-        <sonar.surefire.reportsPath>${project.basedir}/tesler-doc-tests/target/surefire</sonar.surefire.reportsPath>
+        <sonar.java.libraries>${project.basedir}/../tesler-doc-source/target/tesler-doc-source-1.0-SNAPSHOT.jar</sonar.java.libraries>
+        <sonar.tests>${project.basedir}/src/test/java</sonar.tests>
+        <sonar.surefire.reportsPath>${project.basedir}/target/surefire</sonar.surefire.reportsPath>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/tesler-doc-tests/target/jacoco-integration-test-coverage-report/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/jacoco-integration-test-coverage-report/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.verbose>true</sonar.verbose>
         <sonar.projectVersion>1.0-SNAPSHOT</sonar.projectVersion>
       </properties>
