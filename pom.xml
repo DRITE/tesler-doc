@@ -25,8 +25,6 @@
     <sonar.language>java</sonar.language>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-    <sonar.login>admin</sonar.login>
-    <sonar.password>admin</sonar.password>
   </properties>
 
   <profiles>
